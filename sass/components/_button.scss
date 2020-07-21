@@ -1,0 +1,91 @@
+.btn{
+    //adding &,(.btn{}) to put the css in <button> as well as it doesnot have link,visited psuedo classes
+    &,
+    &:link,&:visited{
+        text-transform: uppercase;
+        text-decoration: none;
+        padding: 1.5rem 4rem;
+        display: inline-block;/*always do this whenever you wanna give some height ,width,padding to the element,also text-align: can be applied to make it centre ,cuz they are treated as texts;*/
+        border-radius: 10rem;
+        transition: all .2s;
+        position: relative;
+        font-size: $default-font-size;
+
+        //Change for the <button> element
+        border: none;
+        cursor: pointer;
+    }
+    &:hover{
+        transform: translateY(-3px);/*in css Y moves from top to bottom ,so to go up negative value is specified
+        related to initial link state*/
+        box-shadow: 0 1rem 2rem rgba($color-black,0.2);
+        &::after{
+            transform: scaleX(1.4) scaleY(1.6);
+            opacity: 0;/*when combined with transition , it gives fade out effect,like we did here*/
+        }
+    }
+    &:active,&:focus{
+        outline: none;
+        //adding ,&:focus and outline none for <button> to remove default border(which comes at active state in this) and add our own
+        transform: translateY(-1px);/*related to initial link state*/
+        box-shadow: 0 .5rem 1rem rgba($color-black,0.2);
+    }
+    &--white{
+        background-color: $color-white;
+        color: $color-grey-dark;
+        &::after{
+            background-color: $color-white;
+            }
+    }
+    &--green{
+        background-color: $color-primary;
+        color: $color-white;
+        &::after{
+            background-color: $color-primary;
+            }
+    }
+    &::after{
+        /*child of the .btn element so hieght and widht will be relative to .btn*/
+        content: "";
+        display: inline-block;
+        height: 100%;
+        width: 100%;
+        border-radius: 10rem;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        transition: all 0.4s;
+    }
+    
+   
+    
+    &--animated{
+        animation: moveInBottom 0.5s ease-out 0.75s;/*75% delay at starting*/
+        /*due to the delay button is first already there, so remove it we use animation-fill-mode,rather then setting initials in btn*/
+        animation-fill-mode: backwards;/*will automatically apply styles of 0% animation before the animation starts,so button will not be there already*/
+    }
+}
+
+.btn-text{
+   &:link,
+   &:visited{
+       font-size: $default-font-size;
+    color: $color-primary;
+    display: inline-block;
+    text-decoration: none;
+    border-bottom: 1px solid $color-primary;//by doing this we can set padding between text and line
+    padding: 3px;
+    transition: all .2s;
+   } 
+   &:hover{
+      background-color: $color-primary;
+      color: $color-white;
+      box-shadow: 0 1rem 2rem rgba($color-black,.15);
+      transform: translateY(-2px);
+   }
+   &:active{
+    box-shadow: 0 .5rem 1rem rgba($color-black,.15);
+    transform: translateY(0);
+   }
+}

@@ -1,0 +1,51 @@
+*,*::after,*::before{
+    /* universal selector for after and before pseudo elements as well throught the page */
+    margin: 0;
+    padding: 0;
+    /* making box-sizing a inehrited property for all elements ,rather than setting in universally */
+    box-sizing: inherit;
+}
+html{
+    /* setting font-size in px is not good ,by that users will be unable to override font size in their device, so use percentages, here we used 100% means 100% of default browser font-size given by the device user have ,it is by deafult 16px */
+    /* font-size: 100%;16px by deafualt */
+    /* but we want 10px as root font size so */
+    //this defines what 1rem is
+    //1rem=10px
+    font-size: 62.5%;/*10/16=0.625*/
+    //we made entire layout of our webpage dependent only on font-size,which saves a lot of time to make it resposive
+
+    // @include respond-phone{
+    //     font-size: 50%;
+    // }
+    // @include respond(phone){
+    //     font-size: 50%;
+    // }
+
+    @include respond(tab-land){//width<1200?
+        font-size: 56.25%; //1rem = 9px,9/16 = 56.25%
+    }
+    //wrote this one below because device less than 600 both tab-land and tab-port media queries will be applied and one with the higher precedence will win in media queries that is defined by order they appear in code, bottom one has more precedence
+    @include respond(tab-port){//width<900?
+        //also applied for respond(phone)
+        font-size: 50%;//1rem = 8px,8/16 = 50%
+    }
+   
+    @include respond(big-desktop){
+        font-size: 75%;//1rem = 12px,12/16 = 75%
+    }
+}
+
+body{
+    
+    box-sizing: border-box;
+    padding: 3rem;/*3*10=30px*/
+
+    @include respond(tab-port){
+        padding: 0;
+    }
+}
+
+::selection{
+    background-color: $color-primary;
+    color: $color-white;
+}

@@ -1,0 +1,83 @@
+.story{
+    width: 75%;
+    margin: 0 auto;
+    box-shadow: 0 3rem 6rem rgba($color-black,.1);
+    background-color: rgba($color-white,.6); 
+    border-radius: 3px;
+    padding: 6rem;
+    padding-left: 9rem;//giving back padding after using translateX(-3rem);
+    font-size: $default-font-size;
+    transform: skewX(-12deg);
+    //cant do this becoz &__shape already has a transform that will take precidence over this transform, so will do it separately for text and shape
+    // &>*{
+    //     transform: skewX(12deg);
+    // }
+
+    @include respond(tab-port){
+        width: 100%;
+        padding: 4rem;
+        padding-left: 7rem;
+    }
+    @include respond(phone ){
+        transform: skewX(0);
+    }
+
+    &__shape{
+        position: relative;
+        width: 15rem;
+        height: 15rem;
+        float: left;
+        transform: translateX(-3rem) skewX(12deg);
+        overflow: hidden;
+        border-radius: 50%;//if clip path and shape outside is not supported
+
+        @supports (clip-path: polygon(0 0)) or (-webkit-clip-path: polygon(0 0)){
+             //to make element actually look like a circle
+            -webkit-clip-path: circle(50% at 50% 50%);
+            clip-path: circle(50% at 50% 50%);
+
+            -webkit-shape-outside: circle(50% at 50% 50%);
+            //shape-outside defines where the content floats around the element
+            shape-outside: circle(50% at 50% 50%);//this only works if the item has defined width and height ,and is floated, also in there 50%(means radius=50% of width and heigth ,so diameter = 15rem) at 50% 50%(it means that it is the center of the circle,so exactly the center horizontally and vertically)
+            border-radius: none;
+        }
+
+        @include respond(phone ){
+            transform: translateX(-3rem) skewX(0);
+        }
+    }
+    &__img{
+        height: 100%;//gets the same width(auto) and height as the parent which is &__shape
+        transform: translateX(-4rem) scale(1.4);
+        transition: all .5s;
+       // backface-visibility: hidden;
+    }
+    &__text{
+        transform: skewX(12deg);
+
+        @include respond(phone ){
+            transform: skewX(0);
+        }
+    }
+    &__caption{
+       position: absolute; 
+       top: 50%;
+       left: 50%;
+       transform: translate(-50%,20%);
+       color: $color-white;
+       font-size: 1.7rem;
+       text-transform: uppercase;
+       text-align: center;
+       opacity: 0;
+       transition: all .5s;
+      // backface-visibility: hidden;//to fix shaking
+    }
+    &:hover &__caption{
+        opacity: 1;
+        transform: translate(-50%,-50%);
+    }
+    &:hover &__img{
+        transform: translateX(-4rem) scale(1);
+         filter: blur(3px) brightness(80%);//value below 100% makes it darker
+    }
+}

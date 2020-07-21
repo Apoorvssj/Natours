@@ -1,0 +1,57 @@
+@mixin clearfix {
+    &:after{
+        content: "";
+        display: table;
+        clear: both;
+    }
+}
+
+@mixin absCenter {
+    position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+}
+
+
+//MEDIA QUERY MANAGER
+/*
+0-600px:    Phone
+600px-900px:  Tablet portrait
+900px-1200px:  Tablet Landscape
+1200px-1800 is where our normal styles apply
+1800px+ :     Big desktop  
+*/
+
+// @mixin respond-phone {
+//     @media(max-width: 600px){@content};
+// }
+
+/*
+$breakpoint argument choices:
+-phone
+-tab-port
+-tab-land
+-bid-desktop
+
+ORDER: base+typography>general layout+grid>page layout>components
+*/
+
+//rem or em are not affected by our root-font size in media queries , means 1 rem or 1 em is affected by font size coming from the browser i.e.16px by default,if user on its device changes it to 20px then it will be 20px no matter what we have in our base font-defination.
+//as rems fail to work as intended in some of the browsers, we use ems in media queries
+//so,1em -16px
+
+@mixin respond($breakpoint) {
+    @if $breakpoint == phone {
+        @media only screen and (max-width: 37.5em){@content}; //600px/16px
+    }
+    @if $breakpoint == tab-port {
+        @media only screen and (max-width: 56.25em){@content}; //900px/16px
+    }
+    @if $breakpoint == tab-land {
+        @media only screen and (max-width: 75em){@content}; //1200px/16px
+    }
+    @if $breakpoint == big-desktop {
+        @media only screen and (min-width: 112.5em){@content}; //1800px/16px
+    }
+}
